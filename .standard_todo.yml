@@ -1,0 +1,16 @@
+# Auto generated files with errors to ignore.
+# Remove from this list as you refactor files.
+---
+ignore:
+- Gemfile:
+  - Layout/SpaceInsidePercentLiteralDelimiters
+- config/environments/production.rb:
+  - Layout/ExtraSpacing
+  - Layout/SpaceInsideArrayLiteralBrackets
+  - Style/GlobalStdStream
+- config/environments/test.rb:
+  - Layout/ExtraSpacing
+- spec/rails_helper.rb:
+  - Style/StringLiterals
+- spec/spec_helper.rb:
+  - Style/BlockComments
