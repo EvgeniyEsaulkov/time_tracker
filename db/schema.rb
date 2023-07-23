@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_23_093851) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_23_095359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_23_093851) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "worklogs", force: :cascade do |t|
+    t.date "work_date"
+    t.decimal "hours", precision: 5, scale: 2, default: "0.0"
+    t.bigint "employee_id"
+    t.bigint "project_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_worklogs_on_activity_id"
+    t.index ["employee_id"], name: "index_worklogs_on_employee_id"
+    t.index ["project_id"], name: "index_worklogs_on_project_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "employees", "users"
+  add_foreign_key "worklogs", "activities"
+  add_foreign_key "worklogs", "employees"
+  add_foreign_key "worklogs", "projects"
 end
