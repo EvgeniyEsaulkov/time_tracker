@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root "worklogs#index"
+
+  resources :invitations, only: %i[new create]
+  resources :worklogs, only: %i[index]
 end

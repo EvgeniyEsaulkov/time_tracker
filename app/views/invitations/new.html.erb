@@ -1,0 +1,8 @@
+<h1>Send Invitation</h1>
+
+<%= form_with(model: @user, url: invitations_path, method: :post) do |form| %>
+  <%= form.label :email, "Recipient Email" %>
+  <%= form.email_field :email %>
+
+  <%= form.submit "Send Invitation" %>
+<% end %>
