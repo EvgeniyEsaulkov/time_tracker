@@ -5,4 +5,8 @@ class User < ApplicationRecord
   has_many :employees, dependent: :nullify
 
   validates :email, presence: true
+
+  devise :database_authenticatable, :registerable,
+    :recoverable, :rememberable, :validatable,
+    :invitable
 end
