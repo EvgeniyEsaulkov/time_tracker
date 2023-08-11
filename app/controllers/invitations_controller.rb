@@ -12,7 +12,8 @@ class InvitationsController < ApplicationController
       flash[:notice] = "Invitation sent successfully."
       redirect_to admin_invitations_path
     else
-      render :new
+      flash.now[:alert] = "Error sending invitation. Please check the form for errors."
+      render :new, status: :unprocessable_entity
     end
   end
 
