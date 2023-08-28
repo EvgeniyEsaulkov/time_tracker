@@ -5,5 +5,9 @@ FactoryBot.define do
     sequence :email do |n|
       "person#{n}@example.com"
     end
+
+    after(:build) do |user|
+      user.password = SecureRandom.hex(10)
+    end
   end
 end
