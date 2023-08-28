@@ -39,4 +39,4 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
       - name: Run StandardRB
-        run bundle exec standardrb
+        run: bundle exec standardrb
