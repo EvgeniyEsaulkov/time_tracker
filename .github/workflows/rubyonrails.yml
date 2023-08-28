@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  Tests:
+  ci:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -38,10 +38,5 @@ jobs:
         run: bin/rails db:schema:load
       - name: Run tests
         run: bundle exec rspec
-  StandardRB:
-    runs-on: ubuntu-latest
-    steps:
-      - name: standardrb
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: amoeba/standardrb-action@v2
+      - name: Run StandardRB
+        run bundle exec standardrb
