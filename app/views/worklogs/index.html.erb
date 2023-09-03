@@ -1,1 +1,29 @@
-<h1>Hello, it's TimeTracker App</app>
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
+        <% (@start_date..@end_date).each do |date| %>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= date.strftime('%A') %><br><%= date.strftime('%m/%d/%y') %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @grouped_worklogs.each do |(project, activity), worklogs| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap"><%= project.name %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= activity.name %></td>
+          <% (@start_date..@end_date).each do |date| %>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% worklog = worklogs&.find { |w| w.work_date == date } %>
+              <%= worklog ? worklog.hours : 0 %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
