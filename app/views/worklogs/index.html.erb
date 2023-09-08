@@ -1,4 +1,12 @@
-<div class="overflow-x-auto">
+<div class="flex justify-between">
+  <div>
+    <%= link_to "Previous Week", worklogs_path(start_date: @start_date.prev_week), class: "text-blue-500 hover:underline" %>
+  </div>
+  <div>
+    <%= link_to "Next Week", worklogs_path(start_date: @start_date.next_week), class: "text-blue-500 hover:underline" %>
+  </div>
+</div>
+<div class="overflow-x-auto mt-4">
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr>

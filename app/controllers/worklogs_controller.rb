@@ -2,9 +2,13 @@
 
 class WorklogsController < ApplicationController
   def index
-    @start_date = Date.current.beginning_of_week
-    @end_date = Date.current.end_of_week
+    @start_date = if params[:start_date].present?
+      Date.parse(params[:start_date]).beginning_of_week
+    else
+      Date.current.beginning_of_week
+    end
 
+    @end_date = @start_date.end_of_week
     @grouped_worklogs = worklogs.group_by { |w| [w.project, w.activity] }
   end
 
