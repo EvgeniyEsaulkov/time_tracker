@@ -12,6 +12,22 @@ class WorklogsController < ApplicationController
     @grouped_worklogs = worklogs.group_by { |w| [w.project, w.activity] }
   end
 
+  def update
+    worklog = current_user.employees.first.worklogs.find_or_initialize_by(
+      work_date: params[:date],
+      project_id: params[:project],
+      activity_id: params[:activity]
+    )
+
+    worklog.hours = params[:hours]
+
+    if worklog.save
+      render json: {hours: worklog.hours}
+    else
+      render json: {error: "Failed to update worklog"}, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def worklogs
