@@ -1,0 +1,13 @@
+<%# locals: (project:, activity:, start_date:, end_date:, worklogs:) -%>
+
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap"><%= project.name %></td>
+  <td class="px-6 py-4 whitespace-nowrap"><%= activity.name %></td>
+  <% (start_date..end_date).each do |date| %>
+    <td class="px-6 py-4 whitespace-nowrap" data-controller="worklog-edit" data-worklog-edit-target="cell" data-date="<%= date %>" data-project="<%= project.id %>" data-activity="<%= activity.id %>" data-worklog-navigation-target="cell">
+      <% worklog = worklogs&.find { |w| w.work_date == date } %>
+      <span data-worklog-edit-target="display" data-action="click->worklog-edit#edit"><%= worklog ? worklog.hours : 0 %></span>
+      <input data-worklog-edit-target="input" class="hidden" type="number" min="0" max="24" value="<%= worklog ? worklog.hours : 0 %>" data-action="blur->worklog-edit#toggleCell keyup->worklog-edit#handleKeyUp">
+    </td>
+  <% end %>
+</tr>

@@ -5,7 +5,6 @@ export default class extends Controller {
 
   connect() {
     document.addEventListener("cellUpdated", this.moveToNextCell.bind(this))
-    console.log('Cells: ', this.cellTargets);
   }
 
   moveToNextCell(event) {

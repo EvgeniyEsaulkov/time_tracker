@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   root "worklogs#index"
 
   resources :invitations, only: %i[new create]
-  resources :worklogs, only: %i[index update]
+  resources :worklogs, only: %i[index create update]
 end

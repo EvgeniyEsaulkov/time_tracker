@@ -12,6 +12,23 @@ class WorklogsController < ApplicationController
     @grouped_worklogs = worklogs.group_by { |w| [w.project, w.activity] }
   end
 
+  def create
+    worklog_attrs = worklogs_params.merge(employee_id: current_user.employees.first.id).to_h.symbolize_keys
+    result = worklogs_service.create_blank_week(**worklog_attrs)
+
+    if result.success?
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            "worklog-table",
+            partial: "worklogs/worklog_row",
+            locals: result.value
+          )
+        end
+      end
+    end
+  end
+
   def update
     worklog = current_user.employees.first.worklogs.find_or_initialize_by(
       work_date: params[:date],
@@ -30,11 +47,19 @@ class WorklogsController < ApplicationController
 
   private
 
+  def worklogs_params
+    params.require(:worklog).permit(:project_id, :activity_id, :date)
+  end
+
   def worklogs
     return [] if current_user.employees.none?
 
     current_user.employees.first.worklogs
       .includes(:project, :activity)
       .where(work_date: @start_date..@end_date)
+  end
+
+  def worklogs_service
+    @worklogs_service ||= WorklogsService.new
   end
 end
