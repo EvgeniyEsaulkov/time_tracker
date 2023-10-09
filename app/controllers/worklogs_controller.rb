@@ -19,10 +19,21 @@ class WorklogsController < ApplicationController
     if result.success?
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append(
-            "worklog-table",
-            partial: "worklogs/worklog_row",
-            locals: result.value
+          render turbo_stream: [
+            turbo_stream.append("worklog-table", partial: "worklogs/worklog_row", locals: result.value),
+            turbo_stream.dispatch_event("#worklog-row-form", "worklogRow:created")
+          ]
+        end
+      end
+    else
+      worklog = Worklog.new(worklog_attrs)
+      worklog.errors.add(:project_id, result.failure.dig(:payload, :message))
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "worklog-row-form",
+            partial: "worklogs/worklog_row_form",
+            locals: { worklog: worklog }
           )
         end
       end
@@ -48,7 +59,7 @@ class WorklogsController < ApplicationController
   private
 
   def worklogs_params
-    params.require(:worklog).permit(:project_id, :activity_id, :date)
+    params.require(:worklog).permit(:project_id, :activity_id, :work_date)
   end
 
   def worklogs
