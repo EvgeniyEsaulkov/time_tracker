@@ -33,7 +33,7 @@ class WorklogsController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             "worklog-row-form",
             partial: "worklogs/worklog_row_form",
-            locals: { worklog: worklog }
+            locals: {worklog: worklog}
           )
         end
       end

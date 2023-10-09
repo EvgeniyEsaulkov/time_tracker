@@ -6,7 +6,7 @@ class WorklogsService
     end_date = start_date.end_of_week
 
     if worklog_data_exists?(project_id: project_id, activity_id: activity_id, employee_id: employee_id, start_date: start_date, end_date: end_date)
-      failure = Result.failure(type: :already_created, payload: { message: "Row with these Project and Activity is already present in the table" })
+      failure = Result.failure(type: :already_created, payload: {message: "Row with these Project and Activity is already present in the table"})
       return failure
     end
 
