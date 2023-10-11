@@ -5,12 +5,12 @@
   <%= form_with(model: worklog, remote: true, id: "new_worklog_form", class: "space-y-6") do |form| %>
     <%= form.hidden_field :work_date %>
     <div>
-      <label for="project_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project:</label>
+      <label for="worklog_project_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project:</label>
       <%= form.collection_select(:project_id, Project.all, :id, :name, { prompt: "Select a Project" }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" }) %>
       <%= content_tag(:p, worklog.errors[:project_id].join(" "), class: "text-red-600 text-sm") %>
     </div>
     <div>
-      <label for="activity_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Activity:</label>
+      <label for="worklog_activity_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Activity:</label>
       <%= form.collection_select(:activity_id, Activity.all, :id, :name, { prompt: "Select an Activity" }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" }) %>
     </div>
 
